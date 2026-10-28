@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://avcinetwork.com/sitemap.xml
+Sitemap: https://avci.network/sitemap.xml

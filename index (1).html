@@ -1,0 +1,3462 @@
+<title>Avcı Network</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Avcı Network — light-first news site with night mode
+     Palette: faded cream paper, hot orange accent, acid lime for night mode */
+  :root {
+    /* LIGHT MODE (default) */
+    --ink: #FAF8F2;
+    --ink-2: #F2EFE6;
+    --ink-3: #E8E4D8;
+    --paper: #0A0A0A;
+    --fg: #0A0A0A;
+    --fg-dim: #4A4A48;
+    --fg-muted: #8A8A86;
+    --orange: #FF6B2C;
+    --lime: #C7FF2E;
+    --accent: var(--orange);
+    --cta-bg: var(--orange);
+    --cta-fg: #FFFFFF;
+    --border: rgba(10, 10, 10, 0.08);
+    --border-strong: rgba(10, 10, 10, 0.18);
+    --page-bg: #F5F2E8;
+    --card-bg: #FFFFFF;
+    --ticker-bg: #0A0A0A;
+    --ticker-fg: #FAF8F2;
+    --ticker-dim: #8A8A86;
+    --ticker-up: var(--lime);
+    --ticker-down: var(--orange);
+    --form-cta-bg: var(--orange);
+    --form-cta-fg: #0A0A0A;
+
+    --font-display: 'Barlow Condensed', 'Impact', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Space Grotesk', 'Inter', ui-sans-serif, sans-serif;
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #0A0A0A;
+      --ink-2: #141414;
+      --ink-3: #1E1E1E;
+      --paper: #FAF8F2;
+      --fg: #FAF8F2;
+      --fg-dim: #A8A8A5;
+      --fg-muted: #6B6B68;
+      --accent: var(--lime);
+      --cta-bg: var(--lime);
+      --cta-fg: #0A0A0A;
+      --border: rgba(250, 248, 242, 0.08);
+      --border-strong: rgba(250, 248, 242, 0.18);
+      --ticker-bg: #FAF8F2;
+      --ticker-fg: #0A0A0A;
+      --ticker-dim: #4A4A48;
+      --ticker-up: #0A7A2B;
+      --ticker-down: #C44A1A;
+      --accent: var(--lime);
+      --cta-bg: var(--lime);
+      --cta-fg: #0A0A0A;
+      --page-bg: #1A1A1A;
+      --card-bg: #000000;
+      --form-cta-bg: #000000;
+      --form-cta-fg: var(--lime);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #0A0A0A;
+    --ink-2: #141414;
+    --ink-3: #1E1E1E;
+    --paper: #FAF8F2;
+    --fg: #FAF8F2;
+    --fg-dim: #A8A8A5;
+    --fg-muted: #6B6B68;
+    --accent: var(--lime);
+    --cta-bg: var(--lime);
+    --cta-fg: #0A0A0A;
+    --border: rgba(250, 248, 242, 0.08);
+    --border-strong: rgba(250, 248, 242, 0.18);
+    --ticker-bg: #FAF8F2;
+    --ticker-fg: #0A0A0A;
+    --ticker-dim: #4A4A48;
+    --ticker-up: #0A7A2B;
+    --ticker-down: #C44A1A;
+    --accent: var(--lime);
+    --cta-bg: var(--lime);
+    --cta-fg: #0A0A0A;
+    --page-bg: #1A1A1A;
+    --card-bg: #000000;
+    --form-cta-bg: #000000;
+    --form-cta-fg: var(--lime);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    background: var(--page-bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  /* === BOX WRAPPER === */
+  .box {
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+    padding: 40px;
+    margin-block: 24px;
+  }
+  .box + .box { margin-top: 0; }
+  @media (max-width: 720px) {
+    .box { padding: 24px; border-radius: 16px; }
+  }
+
+  /* === TICKER === */
+  .ticker {
+    background: var(--ticker-bg);
+    color: var(--ticker-dim);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-block: 10px;
+    margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    width: 100vw;
+    max-width: 100%;
+  }
+  .ticker-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: tickerScroll 40s linear infinite;
+    width: max-content;
+  }
+  .ticker-item { display: flex; align-items: center; gap: 10px; }
+  .ticker-item strong { color: var(--ticker-fg); font-weight: 500; }
+  .ticker-item .up { color: var(--ticker-up); }
+  .ticker-item .down { color: var(--ticker-down); }
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* === HEADER === */
+  header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    background: var(--page-bg);
+    z-index: 10;
+    margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--page-bg);
+    z-index: 10;
+  }
+  .header-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-top: 16px;
+    padding: 0 24px;
+  }
+  @media (max-width: 720px) {
+    .header-box { padding: 0 18px; border-radius: 16px; }
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    gap: 32px;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1;
+  }
+  .brand .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .brand .network {
+    color: var(--fg-muted);
+    font-weight: 500;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-dim);
+    flex: 1;
+    justify-content: center;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    color: var(--fg-dim);
+    font-size: 13px;
+    background: transparent;
+    font-family: var(--font-body);
+    width: 220px;
+  }
+  .search:focus-within { border-color: var(--fg-dim); }
+  .search input {
+    background: transparent;
+    border: 0;
+    color: var(--fg);
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    width: 100%;
+  }
+  .search kbd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--ink-3);
+    border-radius: 4px;
+    color: var(--fg-muted);
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    border-radius: 999px;
+    position: relative;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--cta-bg) 40%, transparent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+    min-width: 240px;
+  }
+  .duyur-cta { min-width: 260px; }
+  @media (max-width: 720px) {
+    .cta { min-width: 200px; font-size: 15px; padding: 12px 18px; }
+  }
+  .cta:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--cta-bg) 55%, transparent);
+  }
+  #rotatingCta {
+    animation: ctaBreathe 2.2s ease-in-out infinite;
+    transform-origin: center;
+    will-change: transform;
+  }
+  #rotatingCta:hover {
+    animation: none;
+    transform: translateY(-2px) scale(1.07);
+  }
+  @keyframes ctaBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.055); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #rotatingCta { animation: none; }
+  }
+  .cta .arrow {
+    font-size: 20px;
+    display: inline-block;
+    animation: ctaEmojiWiggle 1.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes ctaEmojiWiggle {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    25% { transform: rotate(10deg) scale(1.1); }
+    50% { transform: rotate(-5deg) scale(1); }
+    75% { transform: rotate(5deg) scale(1.1); }
+  }
+  .duyur-cta {
+    font-size: 20px !important;
+    padding: 18px 32px !important;
+  }
+
+  /* === CATEGORY STRIP === */
+  .cats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-block: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    font-size: 13px;
+    font-weight: 500;
+    justify-content: flex-start;
+    max-height: 52px;
+    transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.22s ease, padding-block 0.32s cubic-bezier(0.4, 0, 0.2, 1), border-top-width 0.32s ease;
+    border-top: 1px solid var(--border);
+    border-top-width: 1px;
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    .cats { gap: 20px; }
+  }
+  .cats::-webkit-scrollbar { display: none; }
+  .cats a {
+    color: var(--fg-dim);
+    white-space: nowrap;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .cats a.active {
+    color: var(--fg);
+  }
+  .cats a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .cats a:hover { color: var(--fg); }
+  .cats a .cat-icon { font-size: 14px; margin-right: 4px; line-height: 1; }
+
+  /* === HERO === */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    padding-block: 24px 16px;
+    align-items: stretch;
+  }
+
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: border-color 0.15s;
+  }
+  .hero-main:hover { border-color: var(--border-strong); }
+  .hero-img {
+    aspect-ratio: 16/10;
+    background: var(--ink-3);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background-image: linear-gradient(135deg, #2d1810 0%, #FF6B2C 50%, #c7ff2e 100%);
+  }
+  .hero-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 70% 30%, transparent, rgba(10,10,10,0.6));
+  }
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .cat-chip .emoji {
+    font-size: 13px;
+    line-height: 1;
+    filter: saturate(1.1);
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.5vw, 68px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0;
+  }
+  .hero-dek {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--fg-dim);
+    max-width: 65ch;
+    margin: 0;
+  }
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin-top: 4px;
+  }
+  .byline .author { color: var(--fg); font-weight: 500; }
+  .byline-sep { opacity: 0.5; }
+
+  .hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 0;
+  }
+  .side-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .side-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    align-items: center;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .side-item:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+  .side-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    background: var(--ink-3);
+    position: relative;
+    overflow: hidden;
+  }
+  .side-thumb.a { background: linear-gradient(135deg, #FF6B2C 0%, #2d1810 100%); }
+  .side-thumb.b { background: linear-gradient(135deg, #1a2b1a 0%, #C7FF2E 100%); }
+  .side-thumb.c { background: linear-gradient(135deg, #0A0A0A 0%, #FF6B2C 60%, #C7FF2E 100%); }
+  .side-thumb.e { background: linear-gradient(135deg, #C7FF2E 0%, #0A0A0A 100%); }
+  .side-thumb.f { background: linear-gradient(135deg, #FF6B2C 0%, #C7FF2E 100%); }
+  .side-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .side-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    line-height: 1.1;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .ad-slot {
+    margin-top: 2px;
+    flex: 1;
+    min-height: 220px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+  }
+  .ad-slot img, .ad-slot video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ad-avci {
+    background: linear-gradient(135deg, #0A0A0A 0%, #2d1810 45%, #FF6B2C 100%);
+    color: #FAF8F2;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ad-avci::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 85% 15%, rgba(199,255,46,0.25), transparent 50%);
+    pointer-events: none;
+  }
+  .ad-avci:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(255,107,44,0.25);
+  }
+  .ad-avci-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(250, 248, 242, 0.6);
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+  .ad-avci-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .ad-avci-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(28px, 2.8vw, 40px);
+    line-height: 0.95;
+    margin: 0;
+    color: #FAF8F2;
+  }
+  .ad-avci-dek {
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(250, 248, 242, 0.78);
+    margin: 0;
+  }
+  .ad-avci-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lime);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .side-item:hover .side-title { color: var(--accent); }
+  .side-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+  }
+
+  /* === SECTION === */
+  .section {
+    padding-block: 16px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-head h2 .mark {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .section-head .more {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-head .more:hover { color: var(--accent); }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .card-img {
+    aspect-ratio: 16/10;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--ink-3);
+    position: relative;
+  }
+  .card-img.a { background: linear-gradient(135deg, #FF6B2C 0%, #2d1810 100%); }
+  .card-img.b { background: linear-gradient(135deg, #1a2b1a 0%, #C7FF2E 100%); }
+  .card-img.c { background: linear-gradient(135deg, #0A0A0A 0%, #FF6B2C 60%, #C7FF2E 100%); }
+  .card-img.d { background: linear-gradient(135deg, #1e1e1e 0%, #3a3a3a 100%); }
+  .card-img.e { background: linear-gradient(135deg, #C7FF2E 0%, #0A0A0A 100%); }
+  .card-img.f { background: linear-gradient(135deg, #FF6B2C 0%, #C7FF2E 100%); }
+  .card-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 70%, transparent, rgba(10,10,10,0.4));
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .card:hover .card-title { color: var(--accent); }
+  .card-dek {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg-dim);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* === POPULAR === */
+  .popular {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .pop-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .pop-item:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+  .pop-thumb-wrap {
+    position: relative;
+  }
+  .pop-thumb {
+    aspect-ratio: 16 / 10;
+    border-radius: 10px;
+    background: var(--ink-3);
+    overflow: hidden;
+  }
+  .pop-thumb.a { background: linear-gradient(135deg, #FF6B2C 0%, #2d1810 100%); }
+  .pop-thumb.b { background: linear-gradient(135deg, #1a2b1a 0%, #C7FF2E 100%); }
+  .pop-thumb.c { background: linear-gradient(135deg, #0A0A0A 0%, #FF6B2C 60%, #C7FF2E 100%); }
+  .pop-thumb.d { background: linear-gradient(135deg, #C7FF2E 0%, #0A0A0A 100%); }
+  .pop-rank {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #0A0A0A;
+    color: #FAF8F2;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+  .pop-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* === NEWSLETTER === */
+  .newsletter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 40px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    align-items: center;
+    margin-top: 24px;
+  }
+  .nl-left h3 {
+    font-family: var(--font-display);
+    font-size: 44px;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    line-height: 0.95;
+  }
+  .nl-left p {
+    font-size: 15px;
+    color: var(--fg-dim);
+    margin: 0;
+    max-width: 42ch;
+  }
+  .nl-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .nl-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 14px 16px;
+    background: var(--ink);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+  }
+  .nl-form input:focus { border-color: var(--accent); }
+  .nl-form button {
+    padding: 14px 24px;
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    border: 0;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* === FOOTER === */
+  footer {
+    padding-block: 48px 32px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .foot-brand h4 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    line-height: 1;
+  }
+  .foot-brand p {
+    color: var(--fg-dim);
+    font-size: 14px;
+    max-width: 42ch;
+    margin: 0;
+  }
+  .foot-col h5 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+  .foot-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .foot-col a { color: var(--fg-dim); }
+  .foot-col a:hover { color: var(--fg); }
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+  }
+  .theme-toggle {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .cats-toggle { margin-right: 4px; }
+  .theme-toggle .track {
+    position: relative;
+    width: 56px;
+    height: 28px;
+    background: var(--ink-3);
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    display: inline-block;
+  }
+  .theme-toggle:hover .track { border-color: var(--fg-dim); }
+  .theme-toggle .thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    line-height: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .thumb { transform: translateX(28px); }
+  }
+  :root[data-theme="dark"] .theme-toggle .thumb { transform: translateX(28px); }
+  :root[data-theme="light"] .theme-toggle .thumb { transform: none; }
+
+  header.compact .cats {
+    max-height: 0;
+    opacity: 0;
+    padding-block: 0;
+    border-top-width: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  header .header-box { transition: box-shadow 0.25s ease; }
+  header.compact .header-box { box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; }
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .popular { grid-template-columns: repeat(2, 1fr); }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .search { display: none; }
+    .newsletter { grid-template-columns: 1fr; padding: 32px; }
+  }
+
+  @media (max-width: 560px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .popular { grid-template-columns: 1fr 1fr; }
+    .foot-grid { grid-template-columns: 1fr; gap: 32px; }
+    .nav { gap: 12px; }
+    .brand .network { display: none; }
+    .cta { padding: 10px 14px; font-size: 12px; }
+    .section-head h2 { font-size: 20px; }
+    .pop-rank { font-size: 28px; }
+    .duyur-title { font-size: 72px !important; }
+    .duyur-form-section { grid-template-columns: 1fr !important; }
+    .services { grid-template-columns: 1fr !important; }
+    .cat-title { font-size: 72px !important; }
+  }
+
+  /* === CATEGORY VIEW === */
+  .cat-hero {
+    padding: 48px 40px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .cat-head {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 720px) {
+    .cat-hero { padding: 32px 24px; border-radius: 16px; }
+    .cat-head { gap: 16px; }
+  }
+  .cat-emoji { font-size: 64px; line-height: 1; }
+  .cat-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(72px, 11vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--accent);
+  }
+  .cat-dek {
+    font-size: 18px;
+    color: var(--fg-dim);
+    max-width: 55ch;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* === DUYUR VIEW === */
+  .duyur-hero {
+    padding: 56px 40px 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) {
+    .duyur-hero { padding: 32px 0 0; border-radius: 16px; }
+    .duyur-hero > .duyur-title,
+    .duyur-hero > .duyur-dek,
+    .duyur-hero > .logo-strip-label { padding-inline: 24px; }
+  }
+
+  .logo-strip-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-top: 16px;
+  }
+
+  .logo-strip {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-block: 24px 40px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+  }
+  .logo-track {
+    display: flex;
+    gap: 72px;
+    width: max-content;
+    animation: logoScroll 50s linear infinite;
+    align-items: center;
+  }
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    flex-shrink: 0;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 8px;
+    box-sizing: content-box;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .logo-item { background: #FFFFFF; }
+  }
+  :root[data-theme="dark"] .logo-item { background: #FFFFFF; }
+  @media (max-width: 720px) {
+    .logo-item { height: 18px; padding: 5px 10px; }
+    .logo-track { gap: 56px; }
+  }
+  .logo-item img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  @keyframes logoScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - 36px)); }
+  }
+  .duyur-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+  }
+  .duyur-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(44px, 7.5vw, 108px);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    text-wrap: balance;
+  }
+  .duyur-dek {
+    font-size: 18px;
+    color: var(--fg-dim);
+    max-width: 70ch;
+    margin: 0;
+    line-height: 1.55;
+  }
+  .duyur-dek strong { color: var(--fg); font-weight: 700; }
+  .duyur-cta {
+    font-size: 15px !important;
+    padding: 16px 28px !important;
+  }
+
+  .services {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .service-tab {
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--card-bg);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+  }
+  .service-tab:hover { border-color: var(--accent); }
+  .service-tab[open] {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+  .service-tab summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: center;
+    padding-right: 64px;
+  }
+  .service-tab summary::-webkit-details-marker { display: none; }
+  .summary-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @media (max-width: 720px) {
+    .service-tab summary { grid-template-columns: 1fr; gap: 14px; padding-right: 48px; }
+  }
+
+  .tab-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+    transition: transform 0.25s ease, background 0.2s ease;
+    user-select: none;
+  }
+  .service-tab[open] .tab-toggle {
+    transform: rotate(45deg);
+    background: var(--accent);
+    color: var(--cta-fg);
+    border-color: var(--accent);
+  }
+
+  .service-short {
+    font-size: 14px;
+    color: var(--fg-dim);
+    margin: 6px 0 0;
+    line-height: 1.55;
+  }
+
+  .tab-body {
+    padding-top: 24px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: tabReveal 0.3s ease;
+  }
+  @keyframes tabReveal {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .collab-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) {
+    .collab-inner { grid-template-columns: 1fr; }
+  }
+
+  .collab-item {
+    padding: 24px;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    background: var(--page-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sub-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    align-self: flex-start;
+  }
+  .sub-tag::before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .sub-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 1;
+    margin: 0 0 4px;
+  }
+
+  .service-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .service-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    font-weight: 500;
+  }
+  .service {
+    padding: 32px;
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--page-bg);
+  }
+  .service-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-muted);
+    letter-spacing: 0.1em;
+  }
+  .service-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    align-self: flex-start;
+  }
+  .service-tag::before { display: none; }
+  .service-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: 0;
+    margin: 0;
+  }
+  .service-dek {
+    font-size: 14px;
+    color: var(--fg-dim);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--fg-dim);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .service-list li {
+    display: flex;
+    gap: 10px;
+  }
+  .service-list li::before {
+    content: "→";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .duyur-form-section {
+    padding: 48px 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-top: 24px;
+    scroll-margin-top: 120px;
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  @media (max-width: 720px) {
+    .duyur-form-section { padding: 36px 20px; border-radius: 16px; gap: 24px; }
+  }
+  .duyur-form-section .form-title { color: var(--accent); font-size: clamp(36px, 4.5vw, 56px); }
+  .duyur-form-section .form-dek { color: var(--fg); opacity: 0.78; }
+  .duyur-form-section .form-contact {
+    color: var(--fg);
+    border-top-color: var(--border);
+  }
+  .duyur-form-section .form-contact strong { color: var(--fg); }
+  .duyur-form-section .form-contact a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .duyur-form-section .duyur-form label span { color: var(--fg); opacity: 0.85; }
+  .duyur-form-section .duyur-cta {
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    align-self: center;
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+  .duyur-form-section .duyur-cta:hover {
+    filter: brightness(0.92);
+  }
+  .form-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    max-width: 68ch;
+  }
+  .form-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.9;
+    margin: 0;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .form-title { white-space: normal; font-size: clamp(40px, 10vw, 56px); }
+  }
+  .form-dek {
+    font-size: 16px;
+    color: var(--fg-dim);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .form-contact {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--fg-dim);
+    width: 100%;
+    max-width: 720px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .form-contact strong {
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .form-contact a { color: var(--accent); font-weight: 500; }
+
+  .duyur-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 540px;
+  }
+  .duyur-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .duyur-form label span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .duyur-form input,
+  .duyur-form select,
+  .duyur-form textarea {
+    padding: 14px 16px;
+    background: var(--page-bg);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    resize: vertical;
+  }
+  .duyur-form input:focus,
+  .duyur-form select:focus,
+  .duyur-form textarea:focus { border-color: var(--accent); }
+  .duyur-form button {
+    cursor: pointer;
+    border: 0;
+    margin-top: 8px;
+  }
+
+  .faq {
+    padding: 48px 40px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 720px) {
+    .faq { padding: 32px 24px; border-radius: 16px; }
+  }
+  .faq-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(40px, 5vw, 56px);
+    line-height: 0.9;
+    margin: 0 0 40px;
+  }
+  .faq-list { display: flex; flex-direction: column; }
+  .faq-item {
+    padding-block: 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+  .faq-item summary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 22px;
+    letter-spacing: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .faq-item summary::after {
+    content: "+";
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: 400;
+    transition: transform 0.2s;
+  }
+  .faq-item[open] summary::after { content: "×"; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item p {
+    margin: 16px 0 0;
+    color: var(--fg-dim);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 65ch;
+  }
+
+  /* === HABER DETAY === */
+  .haber {
+    max-width: 760px;
+    margin: 0 auto;
+    padding-block: 24px 48px;
+    position: relative;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-bottom: 20px;
+  }
+  .breadcrumb a { color: var(--fg-dim); }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb .sep { opacity: 0.5; }
+  .breadcrumb .current {
+    color: var(--fg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 400px;
+  }
+
+  .haber-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 16px;
+  }
+
+  .haber-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0 0 20px;
+  }
+  .haber-dek {
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--fg-dim);
+    margin: 0 0 24px;
+    max-width: 65ch;
+    font-weight: 400;
+  }
+
+  .haber-byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .byline-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--lime));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0A0A0A;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .byline-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .byline-name { font-weight: 600; font-size: 14px; }
+  .byline-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+  }
+  .byline-share { display: flex; gap: 6px; }
+  .share-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: var(--card-bg);
+    color: var(--fg-dim);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-body);
+  }
+  .share-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .haber-cover {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    background-image: linear-gradient(135deg, #2d1810 0%, #FF6B2C 50%, #c7ff2e 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .haber-cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 70% 30%, transparent, rgba(10,10,10,0.5));
+  }
+
+  .haber-body {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--fg);
+    max-width: 65ch;
+  }
+  .haber-body > p { margin: 0 0 20px; }
+  .haber-body h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin: 36px 0 14px;
+    line-height: 1.1;
+  }
+  .haber-body h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 28px 0 10px;
+  }
+  .haber-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .haber-body a:hover { text-decoration-thickness: 2px; }
+  .haber-body strong { color: var(--fg); font-weight: 600; }
+  .haber-body ul, .haber-body ol { padding-left: 24px; margin: 0 0 20px; }
+  .haber-body li { margin-bottom: 6px; }
+  .haber-body blockquote {
+    margin: 32px 0;
+    padding: 20px 24px;
+    border-left: 3px solid var(--accent);
+    background: var(--card-bg);
+    border-radius: 0 12px 12px 0;
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.3;
+    font-style: normal;
+    color: var(--fg);
+    quotes: none;
+  }
+  .haber-body blockquote::before { content: "" " "; color: var(--accent); font-size: 36px; line-height: 0; }
+  .haber-body img, .haber-body .inline-img {
+    width: 100%;
+    border-radius: 12px;
+    margin: 24px 0;
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, #1a2b1a, #C7FF2E);
+  }
+  .haber-body figcaption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    text-align: center;
+    margin-top: -16px;
+    margin-bottom: 24px;
+  }
+
+  /* Floating share bar */
+  .haber-share-float {
+    position: fixed;
+    left: calc(50% - 480px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    z-index: 5;
+  }
+  @media (max-width: 1100px) {
+    .haber-share-float { display: none; }
+  }
+
+  /* Author card */
+  .author-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-top: 48px;
+  }
+  .author-card .byline-avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+  .author-card h4 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  .author-card p { margin: 0; color: var(--fg-dim); font-size: 14px; max-width: 55ch; }
+
+  /* Haber newsletter CTA */
+  .haber-nl-cta {
+    text-align: center;
+    padding: 40px 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-top: 32px;
+  }
+  .haber-nl-cta h3 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .haber-nl-cta p { color: var(--fg-dim); margin: 0 0 20px; }
+  .haber-nl-cta form {
+    display: flex;
+    gap: 8px;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .haber-nl-cta input {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--page-bg);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    font-family: var(--font-body);
+  }
+  .haber-nl-cta input:focus { border-color: var(--accent); }
+  .haber-nl-cta button {
+    padding: 12px 20px;
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    border: 0;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+
+  /* Related */
+  .related {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .related-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+    font-weight: 700;
+  }
+
+  /* === ARAMA === */
+  .arama-hero {
+    padding-block: 32px 16px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .arama-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .arama-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    margin-bottom: 12px;
+  }
+  .arama-input:focus-within { border-color: var(--accent); }
+  .arama-input input {
+    flex: 1;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--fg);
+    outline: none;
+    font-size: 16px;
+    font-family: var(--font-body);
+  }
+  .arama-input .ic { font-size: 18px; color: var(--fg-muted); }
+  .arama-stats {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+  }
+  .arama-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--fg-muted);
+  }
+  .arama-empty .ic { font-size: 48px; margin-bottom: 12px; }
+  .arama-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .arama-tag {
+    padding: 6px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--fg-dim);
+    background: var(--card-bg);
+  }
+  .arama-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* === STATİK SAYFA === */
+  .static-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-block: 32px 48px;
+  }
+  .static-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 72px);
+    text-transform: uppercase;
+    margin: 0 0 24px;
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+  .static-body {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--fg);
+  }
+  .static-body p { margin: 0 0 16px; }
+  .static-body h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 32px 0 12px;
+  }
+  .static-body h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 24px 0 10px;
+  }
+  .static-body ul { padding-left: 24px; margin: 0 0 16px; }
+  .static-body li { margin-bottom: 6px; }
+  .static-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .static-body strong { color: var(--fg); font-weight: 600; }
+  .static-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 600px) { .static-contact-grid { grid-template-columns: 1fr; } }
+  .contact-item {
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+  .contact-item strong { display: block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--fg-muted); margin-bottom: 6px; }
+
+  /* === 404 === */
+  .nf {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-block: 80px 48px;
+    text-align: center;
+  }
+  .nf-code {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 15vw, 180px);
+    line-height: 1;
+    color: var(--accent);
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .nf-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+  .nf-dek {
+    color: var(--fg-dim);
+    font-size: 16px;
+    max-width: 50ch;
+    margin: 0 auto 24px;
+  }
+  .nf-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Card click cursor */
+  .card, .side-item, .pop-item { cursor: pointer; }
+
+  /* === READING PROGRESS BAR === */
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .reading-progress.visible { opacity: 1; }
+  .reading-progress .bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--orange), var(--lime));
+    transition: width 0.1s linear;
+  }
+
+  /* === ENHANCED HOVER === */
+  .card { transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+  .card-img { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+  .card:hover .card-img { transform: scale(1.03); }
+  .card-title { transition: color 0.2s; position: relative; }
+  .side-item { transition: border-color 0.2s, transform 0.2s, background 0.2s; }
+  .side-item:hover {
+    border-color: var(--accent);
+    transform: translateX(3px);
+  }
+  .side-thumb { transition: transform 0.3s; }
+  .side-item:hover .side-thumb { transform: scale(1.05); }
+  .pop-item { transition: border-color 0.2s, transform 0.2s; }
+  .pop-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .pop-thumb { transition: transform 0.3s; }
+  .pop-item:hover .pop-thumb { transform: scale(1.05); }
+  .hero-main { transition: border-color 0.2s, transform 0.15s; }
+  .hero-main:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .hero-img { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .hero-main:hover .hero-img { transform: scale(1.015); }
+
+  /* === CATEGORY ENHANCEMENTS === */
+  .cat-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 20px 12px;
+    flex-wrap: wrap;
+  }
+  .cat-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .cat-filter {
+    padding: 6px 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--card-bg);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cat-filter:hover { border-color: var(--accent); color: var(--accent); }
+  .cat-filter.active {
+    background: var(--accent);
+    color: var(--cta-fg);
+    border-color: var(--accent);
+  }
+  .cat-sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+  }
+  .cat-sort select {
+    padding: 6px 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .cat-load-more {
+    display: flex;
+    justify-content: center;
+    padding-block: 24px;
+  }
+  .load-more-btn {
+    padding: 14px 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .load-more-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* === YAZAR PROFİLİ === */
+  .yazar-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-block: 32px 48px;
+  }
+  .yazar-hero {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    padding: 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 600px) {
+    .yazar-hero { flex-direction: column; align-items: flex-start; padding: 24px; }
+  }
+  .yazar-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--lime));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0A0A0A;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 42px;
+    flex-shrink: 0;
+  }
+  .yazar-info { flex: 1; min-width: 0; }
+  .yazar-role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .yazar-name {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .yazar-bio { color: var(--fg-dim); font-size: 15px; line-height: 1.55; margin: 0 0 14px; max-width: 60ch; }
+  .yazar-stats {
+    display: flex;
+    gap: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+  }
+  .yazar-stats strong { color: var(--accent); font-weight: 500; margin-right: 4px; }
+
+  /* Floating buttons polish */
+  .theme-toggle, .cta, .form-toggle { transition: all 0.2s; }
+</style>
+
+<div class="reading-progress" id="readingProgress">
+  <div class="bar" id="readingProgressBar"></div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><strong>Altın</strong> <span class="up">₺3,842 ▲ 0.8%</span></span>
+    <span class="ticker-item"><strong>Gümüş</strong> <span class="down">₺44.20 ▼ 0.3%</span></span>
+    <span class="ticker-item"><strong>BTC</strong> <span class="up">$112,480 ▲ 2.4%</span></span>
+    <span class="ticker-item"><strong>ETH</strong> <span class="up">$4,620 ▲ 1.9%</span></span>
+    <span class="ticker-item"><strong>SOL</strong> <span class="down">$218.40 ▼ 1.2%</span></span>
+    <span class="ticker-item"><strong>USD/TRY</strong> <span class="up">45.68 ▲ 0.2%</span></span>
+    <span class="ticker-item"><strong>EUR/TRY</strong> <span class="up">51.42 ▲ 0.4%</span></span>
+    <span class="ticker-item"><strong>GBP/TRY</strong> <span class="down">58.75 ▼ 0.1%</span></span>
+    <span class="ticker-item"><strong>BIST 100</strong> <span class="up">13,284 ▲ 1.1%</span></span>
+    <span class="ticker-item"><strong>Altın</strong> <span class="up">₺3,842 ▲ 0.8%</span></span>
+    <span class="ticker-item"><strong>Gümüş</strong> <span class="down">₺44.20 ▼ 0.3%</span></span>
+    <span class="ticker-item"><strong>BTC</strong> <span class="up">$112,480 ▲ 2.4%</span></span>
+    <span class="ticker-item"><strong>ETH</strong> <span class="up">$4,620 ▲ 1.9%</span></span>
+    <span class="ticker-item"><strong>SOL</strong> <span class="down">$218.40 ▼ 1.2%</span></span>
+    <span class="ticker-item"><strong>USD/TRY</strong> <span class="up">45.68 ▲ 0.2%</span></span>
+    <span class="ticker-item"><strong>EUR/TRY</strong> <span class="up">51.42 ▲ 0.4%</span></span>
+    <span class="ticker-item"><strong>GBP/TRY</strong> <span class="down">58.75 ▼ 0.1%</span></span>
+    <span class="ticker-item"><strong>BIST 100</strong> <span class="up">13,284 ▲ 1.1%</span></span>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="header-box">
+    <nav class="nav">
+      <a href="#home" class="brand">Avcı Network</a>
+      <div class="nav-right">
+        <a href="#bilinir" class="cta" id="rotatingCta">
+          <span class="cta-text">Bilinirliğini Artır</span> <span class="arrow" id="ctaEmoji">📣</span>
+        </a>
+      </div>
+    </nav>
+    <div class="cats">
+      <button class="theme-toggle cats-toggle" id="themeToggleNav" aria-label="Tema değiştir">
+        <span class="track"><span class="thumb" id="themeThumb">🌙</span></span>
+      </button>
+      <a href="#home" data-view="home">Tümü</a>
+      <a href="#girisimciler" data-view="girisimciler"><span class="cat-icon">🇹🇷</span>Girişimciler</a>
+      <a href="#kuresel" data-view="kuresel"><span class="cat-icon">🌍</span>Küresel</a>
+      <a href="#pazarlama" data-view="pazarlama"><span class="cat-icon">📈</span>Pazarlama</a>
+      <a href="#startup" data-view="startup"><span class="cat-icon">🚀</span>Startup</a>
+      <a href="#girisimcilik" data-view="girisimcilik"><span class="cat-icon">💼</span>Girişimcilik</a>
+      <a href="#teknoloji" data-view="teknoloji"><span class="cat-icon">🖥️</span>Teknoloji</a>
+      <a href="#finans" data-view="finans"><span class="cat-icon">💰</span>Finans</a>
+    </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="view-home">
+  <!-- HERO -->
+  <section class="hero">
+    <article class="hero-main">
+      <div class="hero-img"></div>
+      <div class="meta-row">
+        <span class="cat-chip"><span class="emoji">🚀</span>Startup</span>
+        <span>5 saat önce</span>
+        <span>·</span>
+        <span>8 dk okuma</span>
+      </div>
+      <h1 class="hero-title">Trendyol'un gizli silahı: Yurt dışında Avrupa pazarına girmek için seçtiği üç şehir</h1>
+      <p class="hero-dek">Türkiye'nin en değerli startup'ı Trendyol, önümüzdeki yılın ilk yarısında Berlin, Amsterdam ve Londra'da operasyonel genişleme planlıyor. 18 milyar dolarlık değerlemesi ile şirketin yeni hamlesi, Türk e-ticaret oyuncularının Avrupa'ya açılım stratejisini şekillendirecek.</p>
+      <div class="byline">
+        <span class="author">Avcı Editörü</span>
+        <span class="byline-sep">·</span>
+        <span>27 Ekim 2026, 14:00</span>
+      </div>
+    </article>
+
+    <aside class="hero-side">
+      <div class="side-list">
+        <a href="#" class="side-item">
+          <div class="side-thumb a"></div>
+          <div class="side-body">
+            <h3 class="side-title">Dedaş'ın sessiz devrimi: Türkiye'nin ilk tam otomatik lojistik ağı</h3>
+            <span class="side-meta">Teknoloji · 2 saat önce</span>
+          </div>
+        </a>
+        <a href="#" class="side-item">
+          <div class="side-thumb b"></div>
+          <div class="side-body">
+            <h3 class="side-title">Y Combinator'a kabul edilen üç Türk girişimcinin ortak paydası ne?</h3>
+            <span class="side-meta">Girişimcilik · 4 saat önce</span>
+          </div>
+        </a>
+        <a href="#" class="side-item">
+          <div class="side-thumb c"></div>
+          <div class="side-body">
+            <h3 class="side-title">Fon turunu kapatan Peak Games kurucusu yeni bir girişim mi hazırlıyor?</h3>
+            <span class="side-meta">Startup · 6 saat önce</span>
+          </div>
+        </a>
+        <a href="#" class="side-item">
+          <div class="side-thumb e"></div>
+          <div class="side-body">
+            <h3 class="side-title">OpenAI'ın yeni modeli Türkçe'de GPT-4'ten %40 daha hızlı</h3>
+            <span class="side-meta">Teknoloji · 8 saat önce</span>
+          </div>
+        </a>
+        <a href="#" class="side-item">
+          <div class="side-thumb f"></div>
+          <div class="side-body">
+            <h3 class="side-title">Merkez Bankası'nın yeni politika sinyali ne anlama geliyor?</h3>
+            <span class="side-meta">Finans · 10 saat önce</span>
+          </div>
+        </a>
+      </div>
+      <a href="#bilinir" class="ad-slot ad-avci" id="heroAdSlot">
+        <div class="ad-avci-label">Reklam</div>
+        <div class="ad-avci-inner">
+          <h3 class="ad-avci-title">Girişimini Duyur</h3>
+          <p class="ad-avci-dek">Avcı Network ile aylık 100 milyon kişiye ulaş. Clipping, Founder Marketing ve Marka İşbirliği.</p>
+          <span class="ad-avci-cta">Birlikte çalışalım <span class="arrow">🚀</span></span>
+        </div>
+      </a>
+    </aside>
+  </section>
+
+  <!-- SON HABERLER -->
+  <section class="section">
+    <div class="section-head">
+      <h2><span class="mark"></span>Son Haberler</h2>
+      <a href="#" class="more">Tümü →</a>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="card-img a"></div>
+        <div class="meta-row">
+          <span class="cat-chip"><span class="emoji">💼</span>Girişimcilik</span>
+          <span>1 saat önce</span>
+        </div>
+        <h3 class="card-title">Türkiye'nin ikinci unicorn'u kim olacak? Sektör analistleri 5 ismi işaret ediyor</h3>
+        <p class="card-dek">Trendyol'un ardından 1 milyar dolar değerlemesini aşacak Türk startup'ı için uzman tahminleri geliyor.</p>
+      </article>
+      <article class="card">
+        <div class="card-img b"></div>
+        <div class="meta-row">
+          <span class="cat-chip"><span class="emoji">💰</span>Finans</span>
+          <span>3 saat önce</span>
+        </div>
+        <h3 class="card-title">Erken aşama yatırımcılar neden GCC bölgesine odaklanıyor?</h3>
+        <p class="card-dek">Dubai ve Riyad merkezli VC'ler, Türk kurucuları yeni pazar olarak görmeye başladı.</p>
+      </article>
+      <article class="card">
+        <div class="card-img c"></div>
+        <div class="meta-row">
+          <span class="cat-chip"><span class="emoji">🖥️</span>Teknoloji</span>
+          <span>5 saat önce</span>
+        </div>
+        <h3 class="card-title">Yapay zeka ajansları Türkiye'de ne kadar hızlı büyüyor?</h3>
+        <p class="card-dek">Son 6 ayda sadece İstanbul'da 42 yeni AI odaklı ajans kuruldu. Rakamlar ve isimler.</p>
+      </article>
+      <article class="card">
+        <div class="card-img d"></div>
+        <div class="meta-row">
+          <span class="cat-chip"><span class="emoji">🌍</span>Küresel</span>
+          <span>7 saat önce</span>
+        </div>
+        <h3 class="card-title">Elon Musk'ın yeni X stratejisi: Ödeme ve bankacılık entegrasyonu nasıl çalışacak?</h3>
+        <p class="card-dek">X Payments için beklenen altyapı detayları sızdı. Hedef kitle ve zamanlama planı.</p>
+      </article>
+      <article class="card">
+        <div class="card-img e"></div>
+        <div class="meta-row">
+          <span class="cat-chip"><span class="emoji">🚀</span>Startup</span>
+          <span>9 saat önce</span>
+        </div>
+        <h3 class="card-title">İstanbul'da ofis açan Y Combinator mezunu Türk kurucular</h3>
+        <p class="card-dek">12 kurucu, San Francisco'dan İstanbul'a geri döndü. Nedenler ve plan.</p>
+      </article>
+      <article class="card">
+        <div class="card-img f"></div>
+        <div class="meta-row">
+          <span class="cat-chip"><span class="emoji">🇹🇷</span>Girişimciler</span>
+          <span>11 saat önce</span>
+        </div>
+        <h3 class="card-title">Zynga'ya satılan Peak Games'in kurucusu Sidar Şahin'in bilinmeyen hikayesi: 100 milyon dolarlık creator ekonomisi raporu yayınlandı</h3>
+        <p class="card-dek">İçerik üreticisi ekosistemi için ilk kapsamlı veri seti. Rakamlar ve çıkarımlar.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="nl-left">
+      <h3>Haftada bir, dolu bir mail</h3>
+      <p>Türkiye ve dünyadan iş haberlerinin özeti her Cuma 19:00'da e-posta kutunda. Spam yok, filler yok.</p>
+    </div>
+    <form class="nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="E-posta adresin" required>
+      <button type="submit">Abone Ol</button>
+    </form>
+  </section>
+
+  <!-- POPÜLER -->
+  <section class="section">
+    <div class="section-head">
+      <h2><span class="mark"></span>Bu Hafta Popüler</h2>
+      <a href="#" class="more">Arşiv →</a>
+    </div>
+    <div class="popular">
+      <a href="#" class="pop-item">
+        <div class="pop-thumb-wrap">
+          <div class="pop-thumb a"></div>
+          <span class="pop-rank">01</span>
+        </div>
+        <h3 class="pop-title">Trendyol'un gizli silahı: Avrupa pazarına girmek için seçtiği üç şehir</h3>
+      </a>
+      <a href="#" class="pop-item">
+        <div class="pop-thumb-wrap">
+          <div class="pop-thumb b"></div>
+          <span class="pop-rank">02</span>
+        </div>
+        <h3 class="pop-title">Y Combinator'a kabul edilen üç Türk girişimcinin ortak paydası</h3>
+      </a>
+      <a href="#" class="pop-item">
+        <div class="pop-thumb-wrap">
+          <div class="pop-thumb c"></div>
+          <span class="pop-rank">03</span>
+        </div>
+        <h3 class="pop-title">Erken aşama yatırımcılar neden GCC bölgesine odaklanıyor?</h3>
+      </a>
+      <a href="#" class="pop-item">
+        <div class="pop-thumb-wrap">
+          <div class="pop-thumb d"></div>
+          <span class="pop-rank">04</span>
+        </div>
+        <h3 class="pop-title">İstanbul'da ofis açan Y Combinator mezunu Türk kurucular</h3>
+      </a>
+    </div>
+  </section>
+</main>
+
+<main class="wrap" id="view-category" hidden>
+  <section class="cat-hero">
+    <div class="cat-head">
+      <div class="cat-emoji" id="cat-emoji">🚀</div>
+      <h1 class="cat-title" id="cat-title">Startup</h1>
+    </div>
+    <p class="cat-dek" id="cat-dek">Türkiye ve dünyadan startup dünyasının günlük özeti. Fonlar, exit'ler, kurucular, yatırımcılar.</p>
+  </section>
+
+  <div class="cat-toolbar">
+    <div class="cat-filters" id="catFilters">
+      <button class="cat-filter active" data-period="all">Tümü</button>
+      <button class="cat-filter" data-period="today">Bugün</button>
+      <button class="cat-filter" data-period="week">Bu Hafta</button>
+      <button class="cat-filter" data-period="month">Bu Ay</button>
+    </div>
+    <div class="cat-sort">
+      <span>Sırala:</span>
+      <select id="catSort">
+        <option value="new">En Yeni</option>
+        <option value="popular">En Çok Okunan</option>
+        <option value="trending">Yükselen</option>
+      </select>
+    </div>
+  </div>
+
+  <section class="section" style="padding-block: 0;">
+    <div class="section-head">
+      <h2><span class="mark"></span><span id="cat-count">24</span> Haber</h2>
+      <span class="more" id="cat-period-label">Son Hafta</span>
+    </div>
+    <div class="grid-3" id="cat-grid"></div>
+    <div class="cat-load-more">
+      <button class="load-more-btn" id="catLoadMore">↓ Daha Fazla Yükle</button>
+    </div>
+  </section>
+</main>
+
+<!-- ============== YAZAR PROFİLİ ============== -->
+<main class="wrap" id="view-yazar" hidden>
+  <article class="yazar-page">
+    <div class="yazar-hero">
+      <div class="yazar-avatar" id="yazar-avatar">A</div>
+      <div class="yazar-info">
+        <div class="yazar-role" id="yazar-role">Girişimcilik Editörü</div>
+        <h1 class="yazar-name" id="yazar-name">Avcı Editörü</h1>
+        <p class="yazar-bio" id="yazar-bio">Türkiye ve dünyadan girişimcilik, startup ve iş dünyası haberlerini kaleme alır. Her gün yeni, filler yok, düz haber yok.</p>
+        <div class="yazar-stats">
+          <span><strong id="yazar-article-count">147</strong>Yazı</span>
+          <span><strong id="yazar-reader-count">2.4M</strong>Okuma</span>
+          <span><strong>Ocak 2026</strong>Katıldı</span>
+        </div>
+      </div>
+    </div>
+    <section class="section" style="padding-block: 0;">
+      <div class="section-head">
+        <h2><span class="mark"></span>Yazdıkları</h2>
+        <span class="more">Son 20</span>
+      </div>
+      <div class="grid-3" id="yazar-articles"></div>
+    </section>
+  </article>
+</main>
+
+<main class="wrap" id="view-duyur" hidden>
+  <section class="duyur-hero">
+    <h1 class="duyur-title">Girişimini ve Kişisel Markanı Türkiye'de Viral Yapıyoruz</h1>
+    <p class="duyur-dek">Avcı Network, <strong>30 farklı sosyal medya hesabının</strong> oluşturduğu, <strong>aylık 100 milyon kişiye</strong> ulaşan bir içerik üretici ağıdır. Senin hikayeni, markanı ve girişimini doğru kitleye, doğru formatta, doğru zamanda ulaştırırız. Türkiye'nin konuştuğu girişimcilerin yaptığı ile aynı yöntem.</p>
+    <div class="logo-strip-label">Bu markalar Avcı Network ile çalıştı</div>
+    <div class="logo-strip">
+      <div class="logo-track">
+        <div class="logo-item"><img src="logos/ikas.png" alt="ikas"></div>
+        <div class="logo-item"><img src="logos/emergent.png" alt="emergent"></div>
+        <div class="logo-item"><img src="logos/makromusic.png" alt="makromusic"></div>
+        <div class="logo-item"><img src="logos/e-adam.png" alt="e-adam"></div>
+        <div class="logo-item"><img src="logos/dof.png" alt="DOF Robotics"></div>
+        <div class="logo-item"><img src="logos/modoko.png" alt="Modoko"></div>
+        <div class="logo-item"><img src="logos/icool.png" alt="I-COOL"></div>
+        <div class="logo-item"><img src="logos/ikas.png" alt="ikas"></div>
+        <div class="logo-item"><img src="logos/emergent.png" alt="emergent"></div>
+        <div class="logo-item"><img src="logos/makromusic.png" alt="makromusic"></div>
+        <div class="logo-item"><img src="logos/e-adam.png" alt="e-adam"></div>
+        <div class="logo-item"><img src="logos/dof.png" alt="DOF Robotics"></div>
+        <div class="logo-item"><img src="logos/modoko.png" alt="Modoko"></div>
+        <div class="logo-item"><img src="logos/icool.png" alt="I-COOL"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <details class="service-tab">
+      <summary class="tab-head">
+        <div class="summary-left">
+          <h3 class="service-title">🎬 Clipping</h3>
+          <div class="service-tag">Sen İçerik Üret, Biz İzletelim</div>
+        </div>
+        <p class="service-short">Zaten içerik üreten, ama izletecek dağıtım gücü olmayanlar için tasarladığımız bir sistem. Podcast'in, YouTube videoların, konuşmaların varsa, bu paket senin için.</p>
+        <span class="tab-toggle" aria-hidden="true">+</span>
+      </summary>
+      <div class="tab-body">
+        <div class="service-section">
+          <div class="service-label">Ne yapıyoruz?</div>
+          <p class="service-dek">Senin uzun formunu alıyoruz, 10 larca hesaptan günde yüzlerce kesit halinde yayınlıyoruz. İsmin, girişimin, hizmetin milyonlarca kişinin önünden geçiyor. Sen üretmeye devam et, dağıtım bizde.</p>
+        </div>
+        <div class="service-section">
+          <div class="service-label">Paket</div>
+          <ul class="service-list">
+            <li>Aylık minimum 1 milyon izlenme garantisi</li>
+            <li>Bin izlenme başına sabit ücret</li>
+            <li>Ayda 100 milyon erişime kadar ölçeklendirme</li>
+            <li>Türkçe altyazı, hook kontrolü, müzik eşleştirme</li>
+            <li>Avcı Network ağından dağıtım</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <details class="service-tab">
+      <summary class="tab-head">
+        <div class="summary-left">
+          <h3 class="service-title">🧑‍💼 Founder Marketing</h3>
+          <div class="service-tag">Şirketin Yüzü Sensin, Parlatmak Bizim İşimiz</div>
+        </div>
+        <p class="service-short">Görünür olmanın bir şirket yürütmek kadar önemli olduğunu bilmeyenler için tasarladığımız bir süreç. Yüzün ortada değilse, bu paket senin için.</p>
+        <span class="tab-toggle" aria-hidden="true">+</span>
+      </summary>
+      <div class="tab-body">
+        <div class="service-section">
+          <div class="service-label">Ne yapıyoruz?</div>
+          <p class="service-dek">Seni, kariyerini ve şirketini öğreniyoruz. Hedeflerine, duruşuna, kime hitap ettiğine göre sosyal medya varlığını baştan kurguluyoruz. Gerekirse ekibimizle prodüksiyonunu bizzat çekiyoruz, gerekirse seni Türkiye'nin konuştuğu podcastlere, etkinliklere, kanallara konuk yapıyoruz.</p>
+        </div>
+        <div class="service-section">
+          <div class="service-label">Paket</div>
+          <ul class="service-list">
+            <li>Aylık retainer modeli</li>
+            <li>Strateji ve içerik planlaması</li>
+            <li>Prodüksiyon ekibi ile çekim</li>
+            <li>Konuk ağı erişimi</li>
+            <li>Aylık performans raporu</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <details class="service-tab collab-tab">
+      <summary class="tab-head">
+        <div class="summary-left">
+          <h3 class="service-title">🤝 Marka İşbirliği</h3>
+          <div class="service-tag">Markan Avcı İçeriklerinin Sponsoru Olsun</div>
+        </div>
+        <p class="service-short">Her aşamadaki markalar ve girişimciler için üç farklı iş birliği. Genel bilinirlikten yatırım öncesi hazırlığa, marka duyurusundan performans sponsorluğuna.</p>
+        <span class="tab-toggle" aria-hidden="true">+</span>
+      </summary>
+      <div class="tab-body">
+        <div class="collab-inner">
+          <article class="collab-item">
+            <h4 class="sub-title">Başarı Hikayesi</h4>
+            <p class="service-dek">Hikayesi anlatılmaya değer bir yolda olanlar için. 250 bin takipçili girişimcilik, finans ve başarı odaklı 20-45 yaş kitlesine senin hikayeni anlatıyoruz. Başarmak işin yarısı, duyulmak diğer yarısı.</p>
+            <ul class="service-list">
+              <li>Dedicated başarı hikayesi reels</li>
+              <li>7 iş gününde yayın</li>
+              <li>Klip ağından dağıtım</li>
+            </ul>
+          </article>
+
+          <article class="collab-item">
+            <h4 class="sub-title">Hayalin Ne?</h4>
+            <p class="service-dek">Pazarlama bütçesini sadece reklam gibi harcamak istemeyenler için. Avcı sokakta insanlara hayallerini soruyor, senin markan bu hayali gerçekleştiren olarak öne çıkıyor.</p>
+            <ul class="service-list">
+              <li>Sosyal olarak markanı duyur</li>
+              <li>İnsanlarla gerçek bağ kur</li>
+              <li>Prodüksiyon bizden</li>
+            </ul>
+          </article>
+
+          <article class="collab-item">
+            <h4 class="sub-title">Logo Sponsorluğu</h4>
+            <p class="service-dek">Sabit maliyet değil, sonuç ödemek isteyenler için. Avcı'nın videolarında logon yer alıyor. Avcı Network içerik üreticileri sayesinde aylık 30 milyon kişiye kadar erişim.</p>
+            <ul class="service-list">
+              <li>Direkt izlenme başına ödeme</li>
+              <li>Sabit bedel yok</li>
+              <li>Aylık 30 milyon erişime kadar</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="duyur-form-section" id="bilinir-form">
+    <div class="form-head">
+      <h2 class="form-title">Birlikte Çalışalım</h2>
+      <p class="form-dek">Formu doldur, 24 saat içinde geri dönüş yapalım. Kısa bir keşif görüşmesi için uygun bir zaman belirleyelim.</p>
+    </div>
+    <form class="duyur-form" onsubmit="event.preventDefault(); alert('Form kaydedildi. Yakında sana döneceğiz.');">
+      <label>
+        <span>Adınız Soyadınız</span>
+        <input type="text" required placeholder="">
+      </label>
+      <label>
+        <span>E-posta</span>
+        <input type="email" required placeholder="">
+      </label>
+      <label>
+        <span>Marka veya Şirket</span>
+        <input type="text" placeholder="">
+      </label>
+      <label>
+        <span>Hangi hizmetle ilgileniyorsun?</span>
+        <select required>
+          <option value="">Seç</option>
+          <option>Clipping</option>
+          <option>Founder Marketing</option>
+          <option>Marka İşbirliği</option>
+          <option>Emin değilim, konuşalım</option>
+        </select>
+      </label>
+      <label>
+        <span>Bütçe (opsiyonel)</span>
+        <select>
+          <option value="">Belirtmek istemiyorum</option>
+          <option>25.000 TL altı</option>
+          <option>25.000 - 100.000 TL</option>
+          <option>100.000 - 500.000 TL</option>
+          <option>500.000 TL üstü</option>
+        </select>
+      </label>
+      <label>
+        <span>Kısaca anlat</span>
+        <textarea rows="4" placeholder="Markan, şirketin, hedefin..."></textarea>
+      </label>
+      <button type="submit" class="cta duyur-cta">Gönder <span class="arrow">🚀</span></button>
+    </form>
+    <div class="form-contact">
+      <strong>E-posta</strong><a href="mailto:hello@avci.network">hello@avci.network</a>
+    </div>
+  </section>
+
+  <section class="faq" id="duyur-faq">
+    <h2 class="faq-title">Sık Sorulan Sorular</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Hangi hizmeti seçeceğime nasıl karar veririm?</summary>
+        <p>Keşif görüşmesinde birlikte netleştiririz. Uzun form üretiyorsan Clipping, kendi hikayeni duyurmak istiyorsan Founder Marketing, sadece markan öne çıksın istiyorsan Avcı Collab mantıklı.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Fiyatlandırma nasıl?</summary>
+        <p>Her hizmetin kendi paketleri var. Keşif görüşmesinde bütçene göre net teklif gönderiyoruz. Standart ödeme vadesi 15 gün.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Hangi sürede yayına çıkar?</summary>
+        <p>Clipping için 7-10 gün, Founder Marketing için 2-3 hafta, Avcı Collab için 7 iş günü standart.</p>
+      </details>
+      <details class="faq-item">
+        <summary>İçerik hakkı kimde?</summary>
+        <p>Üretilen tüm içeriklerin kullanım hakları sana ait. Biz dağıtım ve üretim yaparız.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Performans garantisi var mı?</summary>
+        <p>Belirli bir izlenme garanti etmiyoruz. Ortalama erişim verilerini paylaşır, aylık raporla takip ederiz.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<!-- ============== HABER DETAY ============== -->
+<main class="wrap" id="view-haber" hidden>
+  <div class="haber-share-float">
+    <button class="share-btn" title="X'te paylaş" onclick="shareOn('x')">𝕏</button>
+    <button class="share-btn" title="LinkedIn'de paylaş" onclick="shareOn('linkedin')">in</button>
+    <button class="share-btn" title="WhatsApp'ta paylaş" onclick="shareOn('whatsapp')">💬</button>
+    <button class="share-btn" title="Linki kopyala" onclick="shareOn('copy')">🔗</button>
+  </div>
+
+  <article class="haber">
+    <nav class="breadcrumb">
+      <a href="#home">Ana Sayfa</a>
+      <span class="sep">›</span>
+      <a href="#startup" id="haber-cat-link">Startup</a>
+      <span class="sep">›</span>
+      <span class="current" id="haber-breadcrumb-title">Haber başlığı</span>
+    </nav>
+
+    <div class="haber-meta">
+      <span class="cat-chip"><span class="emoji" id="haber-cat-emoji">🚀</span><span id="haber-cat-name">Startup</span></span>
+      <span id="haber-date">27 Ekim 2026, 14:00</span>
+      <span class="sep">·</span>
+      <span id="haber-reading">8 dk okuma</span>
+    </div>
+
+    <h1 class="haber-title" id="haber-title">Trendyol'un gizli silahı: Avrupa pazarına girmek için seçtiği üç şehir</h1>
+    <p class="haber-dek" id="haber-dek">Türkiye'nin en değerli startup'ı Trendyol, önümüzdeki yılın ilk yarısında Berlin, Amsterdam ve Londra'da operasyonel genişleme planlıyor. 18 milyar dolarlık değerlemesi ile şirketin yeni hamlesi, Türk e-ticaret oyuncularının Avrupa'ya açılım stratejisini şekillendirecek.</p>
+
+    <div class="haber-byline">
+      <div class="byline-avatar">A</div>
+      <div class="byline-info">
+        <span class="byline-name">Avcı Editörü</span>
+        <span class="byline-sub">Girişimcilik · Startup</span>
+      </div>
+      <div class="byline-share">
+        <button class="share-btn" title="X'te paylaş" onclick="shareOn('x')">𝕏</button>
+        <button class="share-btn" title="LinkedIn" onclick="shareOn('linkedin')">in</button>
+        <button class="share-btn" title="WhatsApp" onclick="shareOn('whatsapp')">💬</button>
+        <button class="share-btn" title="Linki kopyala" onclick="shareOn('copy')">🔗</button>
+      </div>
+    </div>
+
+    <div class="haber-cover"></div>
+
+    <div class="haber-body" id="haber-body-content">
+      <p>İçerik yükleniyor...</p>
+    </div>
+
+    <div class="author-card">
+      <div class="byline-avatar">A</div>
+      <div>
+        <h4>Avcı Editörü</h4>
+        <p>Türkiye ve dünyadan girişimcilik, startup ve iş dünyası haberlerini kaleme alır. Her gün yeni, filler yok.</p>
+      </div>
+    </div>
+
+    <div class="haber-nl-cta">
+      <h3>Haftalık Avcı Bülteni</h3>
+      <p>Türkiye'nin iş gündemi, haftalık özet olarak e-postanıza. Reklam yok, filler yok.</p>
+      <form onsubmit="event.preventDefault(); alert('Teşekkürler! Abonelik tamamlandı.');">
+        <input type="email" placeholder="E-posta adresin" required>
+        <button type="submit">Abone Ol</button>
+      </form>
+    </div>
+
+    <section class="related">
+      <h2 class="related-title">İlgili Haberler</h2>
+      <div class="grid-3" id="related-grid"></div>
+    </section>
+  </article>
+</main>
+
+<!-- ============== ARAMA ============== -->
+<main class="wrap" id="view-arama" hidden>
+  <section class="arama-hero">
+    <h1 class="arama-title">Arama</h1>
+    <div class="arama-input">
+      <span class="ic">🔍</span>
+      <input type="text" id="aramaInput" placeholder="Haber, konu, girişimci ara..." autocomplete="off">
+    </div>
+    <div class="arama-stats" id="aramaStats">Aramak için yaz veya aşağıdaki popüler konulardan seç</div>
+    <div class="arama-tags">
+      <button class="arama-tag" onclick="doArama('Trendyol')">Trendyol</button>
+      <button class="arama-tag" onclick="doArama('Y Combinator')">Y Combinator</button>
+      <button class="arama-tag" onclick="doArama('yapay zeka')">Yapay zeka</button>
+      <button class="arama-tag" onclick="doArama('startup fonları')">Startup fonları</button>
+      <button class="arama-tag" onclick="doArama('Bursa')">Bursa</button>
+      <button class="arama-tag" onclick="doArama('GCC')">GCC pazarı</button>
+    </div>
+  </section>
+  <section class="section">
+    <div class="grid-3" id="aramaResults"></div>
+  </section>
+</main>
+
+<!-- ============== STATİK SAYFA (hakkında / iletişim / kvkk) ============== -->
+<main class="wrap" id="view-static" hidden>
+  <article class="static-page">
+    <h1 class="static-title" id="static-title">Hakkında</h1>
+    <div class="static-body" id="static-body"></div>
+  </article>
+</main>
+
+<!-- ============== 404 ============== -->
+<main class="wrap" id="view-404" hidden>
+  <section class="nf">
+    <div class="nf-code">404</div>
+    <h1 class="nf-title">Haber bulunamadı</h1>
+    <p class="nf-dek">Aradığın sayfa taşındı, kaldırıldı veya hiç olmadı. Ana sayfadan devam edebilir, arama yapabilirsin.</p>
+    <div class="nf-actions">
+      <a href="#home" class="cta">Ana Sayfa</a>
+      <a href="#arama" class="cta" style="background: transparent; color: var(--fg); border: 1px solid var(--border-strong);">Arama</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <h4>Avcı Network</h4>
+      <p>Türkiye ve dünyadan iş dünyası, girişimcilik ve teknoloji haberleri. Her gün yeni, filler yok.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Site</h5>
+      <ul>
+        <li><a href="#home">Ana Sayfa</a></li>
+        <li><a href="#arama">Arama</a></li>
+        <li><a href="#hakkinda">Hakkında</a></li>
+        <li><a href="#iletisim">İletişim</a></li>
+        <li><a href="#kvkk">KVKK & Gizlilik</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Hizmetler</h5>
+      <ul>
+        <li><a href="#">Başarını Duyur</a></li>
+        <li><a href="#">Clipping</a></li>
+        <li><a href="#">Founder Marketing</a></li>
+        <li><a href="#">Marka İşbirlikleri</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Takip</h5>
+      <ul>
+        <li><a href="https://instagram.com/avci">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="mailto:hello@avci.network">hello@avci.network</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Avcı Network · Tüm hakları saklıdır</span>
+    <span>hello@avci.network</span>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle
+  (function() {
+    var btn = document.getElementById('themeToggleNav');
+    var label = document.getElementById('themeLabel');
+    if (!btn) return;
+    var thumb = document.getElementById('themeThumb');
+    function updateThumbEmoji() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var isDark;
+      if (current === 'dark') isDark = true;
+      else if (current === 'light') isDark = false;
+      else isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (thumb) thumb.textContent = isDark ? '☀️' : '🌙';
+    }
+    updateThumbEmoji();
+    btn.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var isDark;
+      if (current === 'dark') isDark = true;
+      else if (current === 'light') isDark = false;
+      else isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      updateThumbEmoji();
+    });
+  })();
+
+  // Rotating CTA text
+  (function() {
+    var messages = [
+      { text: 'Bilinirliğini Artır', emoji: '📣' },
+      { text: 'Girişimini Duyur', emoji: '🚀' },
+      { text: 'Markanı Büyüt', emoji: '✨' }
+    ];
+    var idx = 0;
+    var textEl = document.querySelector('#rotatingCta .cta-text');
+    var emojiEl = document.getElementById('ctaEmoji');
+    if (!textEl || !emojiEl) return;
+    textEl.style.transition = 'opacity 0.15s ease';
+    emojiEl.style.transition = 'opacity 0.15s ease';
+    setInterval(function() {
+      idx = (idx + 1) % messages.length;
+      textEl.style.opacity = '0';
+      emojiEl.style.opacity = '0';
+      setTimeout(function() {
+        textEl.textContent = messages[idx].text;
+        emojiEl.textContent = messages[idx].emoji;
+        textEl.style.opacity = '1';
+        emojiEl.style.opacity = '1';
+      }, 150);
+    }, 3500);
+  })();
+
+  // Hash routing
+  (function() {
+    var categories = {
+      startup: { emoji: '🚀', name: 'Startup', dek: 'Türkiye ve dünyadan startup dünyasının günlük özeti. Fonlar, exit\'ler, kurucular, yatırımcılar.' },
+      teknoloji: { emoji: '🖥️', name: 'Teknoloji', dek: 'Yapay zeka, yazılım, donanım ve dijital dönüşüm. Teknolojinin iw dünyasını nasıl değiştirdiği.' },
+      finans: { emoji: '💰', name: 'Finans', dek: 'Yatırım, bankacılık, kripto, piyasalar. Paranın hareket ettiği her yer.' },
+      girisimcilik: { emoji: '💼', name: 'Girişimcilik', dek: 'Kurucuların hikayesi, hatalar, dersler. Girişimcilik yolculuğunun arka planı.' },
+      kuresel: { emoji: '🌍', name: 'Küresel', dek: 'Dünyadan iş ve teknoloji haberleri. Silikon Vadisi\'nden Berlin\'e, Dubai\'den Singapur\'a.' },
+      girisimciler: { emoji: '🇹🇷', name: 'Girişimciler', dek: 'Türkiye\'nin önde gelen girişimcilerinin biyografisi, hikayesi ve dönüm noktaları. Avcı\'nın anlatımıyla.' },
+      pazarlama: { emoji: '📈', name: 'Pazarlama', dek: 'Marketing stratejileri, kampanya analizleri, growth hack\'leri ve markaların büyüme hikayeleri.' }
+    };
+
+    var sampleEntrepreneurs = [
+      { name: 'Ahmet Emre Sağyılmaz', dek: 'Insider CEO\'su. B2B SaaS pazarının en önemli Türk oyuncularından.', img: 'a' },
+      { name: 'Berk Üstün', dek: 'Peak Games\'in co-founder\'ı, Dream Games kurucusu. Mobil oyun ekosisteminin üstü.', img: 'b' },
+      { name: 'Cem Çelebiler', dek: 'Multi-exit girişimci. Teknoloji ve dijital ürünlerde yatırımcı ve mentor.', img: 'c' },
+      { name: 'Çağlar Erol', dek: 'Trendyol\'un büyük büyüme döneminde kritik rollerde bulundu.', img: 'd' },
+      { name: 'Demet Mutlu', dek: 'Trendyol\'un kurucusu. Türkiye\'nin ilk unicorn\'u, 16 milyar dolar değerleme.', img: 'e' },
+      { name: 'Emre Kurttepeli', dek: 'Mynet\'in kurucusu. Türk internet dünyasının öncülerinden.', img: 'f' },
+      { name: 'Fatih Isbecer', dek: 'Pozitron Yazılım kurucusu. Mobil ödeme ve bankacılığın sessiz dev oyuncusu.', img: 'a' },
+      { name: 'Gökhan Yazıcı', dek: 'Yemeksepeti\'nin kurucu ortaklarından. Delivery Hero exit\'inin arkasındaki isim.', img: 'b' },
+      { name: 'Hakan Baas', dek: 'Dream Games co-founder. Royal Match\'in Avrupa pazar liderliğini kurdu.', img: 'c' },
+      { name: 'Hamdi Ulukaya', dek: 'Chobani\'nin kurucusu. Amerikan rüyasını yoğurtla kuran Türk.', img: 'd' },
+      { name: 'Idris Yılmaz', dek: 'Hepsiburada\'nın kurucularından. Türk e-ticaretin ilk büyük markalarından.', img: 'e' },
+      { name: 'Kaan Akin', dek: 'Y Combinator mezunu. B2B SaaS ürünüyle Silikon Vadisi\'nde öne çıktı.', img: 'f' },
+      { name: 'Melih Odemiş', dek: 'Yemeksepeti\'nin kurucu ortaklarından. Startup kurup Yemeksepeti\'ne sattı.', img: 'a' },
+      { name: 'Nazim Erdoğan', dek: 'Dream Games CEO. Match-3 oyun janrını dünya çapında yeniden tanımladı.', img: 'b' },
+      { name: 'Nevzat Aydın', dek: 'Yemeksepeti\'nin kurucusu. Delivery Hero\'ya 589 milyon dolara sattı.', img: 'c' },
+      { name: 'Ömer F. Şahbaz', dek: 'Trendyol\'un CEO\'su. Platformu Avrupa\'ya yayılan devine dönüştürdü.', img: 'd' },
+      { name: 'Serkan Borancili', dek: 'GittiGidiyor kurucularından. eBay\'in Trkey açılımının arkasındaki isim.', img: 'e' },
+      { name: 'Sidar Sahin', dek: 'Peak Games kurucusu. Zynga\'ya 1.8 milyar dolara satılış sağladı.', img: 'f' },
+      { name: 'Umut Dural', dek: 'Getir\'in kurucu ortaklarından. Hızlı teslimat kategorisini yarattı.', img: 'a' },
+      { name: 'Ünlad Coşkun', dek: 'ikas kurucularından. Türkiye\'nin Shopify\'ı olarak hedefliyor.', img: 'b' },
+      { name: 'Zafer Çağat', dek: 'Fiba Holding ve dijital ürünlerde yatırımları ile tanınıyor.', img: 'c' }
+    ];
+
+    var sampleArticles = [
+      { title: 'Trendyol\'un Avrupa planı: Berlin, Amsterdam ve Londra', dek: 'Türkiye\'nin en değerli startup\'ı Avrupa pazarına girmek için üç şehir seçti.', time: '2 saat önce', img: 'a' },
+      { title: 'Y Combinator\'a kabul edilen 3 Türk kurucu kim?', dek: 'YC\'ye kabul edilen son dönemin Türk kurucuları ve projeleri.', time: '4 saat önce', img: 'b' },
+      { title: 'Peak Games kurucusu yeni girişim mi hazırlıyor?', dek: 'Zynga satışından sonra yeni projesinin detayları sızdı.', time: '6 saat önce', img: 'c' },
+      { title: 'Erken aşama VC\'ler neden GCC\'ye yöneldi?', dek: 'Dubai ve Riyad merkezli yatırımcılar Türk kurucuları arıyor.', time: '8 saat önce', img: 'd' },
+      { title: 'Yapay zeka ajansları Türkiye\'de patladı', dek: 'Son 6 ayda sadece İstanbul\'da 42 yeni AI ajansı kuruldu.', time: '10 saat önce', img: 'e' },
+      { title: 'İstanbul\'a dönen Y Combinator mezunları', dek: '12 kurucu San Francisco\'dan İstanbul\'a geri döndü. Nedenler.', time: '12 saat önce', img: 'f' },
+      { title: 'Creator ekonomisi raporu: 100 milyon dolar', dek: 'Türkiye\'nin ilk kapsamlı creator ekosistemi veri seti yayınlandı.', time: '1 gün önce', img: 'a' },
+      { title: 'OpenAI\'ın yeni modeli Türkçe\'de %40 daha hızlı', dek: 'GPT serisi Türkçe dil desteğini yeni modelle büyük ölçüde iyileştirdi.', time: '1 gün önce', img: 'b' },
+      { title: 'Merkez Bankası\'nın yeni politika sinyali', dek: 'Haftalık toplantıdan çıkan kararın piyasalara etkisi.', time: '2 gün önce', img: 'c' }
+    ];
+
+    var catState = { page: 1, period: 'all', sort: 'new' };
+
+    function buildCategoryGrid(catKey) {
+      var cat = categories[catKey];
+      if (!cat) return;
+      document.getElementById('cat-emoji').textContent = cat.emoji;
+      document.getElementById('cat-title').textContent = cat.name;
+      document.getElementById('cat-dek').textContent = cat.dek;
+
+      // Extend to 24 items
+      var extended = [];
+      for (var i = 0; i < 24; i++) {
+        var base = sampleArticles[i % sampleArticles.length];
+        var hoursAgo = (i + 1) * 3;
+        var timeLabel = hoursAgo < 24 ? hoursAgo + ' saat önce' : Math.floor(hoursAgo / 24) + ' gün önce';
+        extended.push({ title: base.title, dek: base.dek, time: timeLabel, img: base.img, hoursAgo: hoursAgo, popularity: ((i * 7919) % 9500) + 500 });
+      }
+
+      // Filter
+      var filtered = extended.filter(function(a){
+        if (catState.period === 'today') return a.hoursAgo < 24;
+        if (catState.period === 'week') return a.hoursAgo < 168;
+        if (catState.period === 'month') return a.hoursAgo < 720;
+        return true;
+      });
+
+      // Sort
+      if (catState.sort === 'popular') filtered.sort(function(a, b){ return b.popularity - a.popularity; });
+      else if (catState.sort === 'trending') filtered.sort(function(a, b){ return (b.popularity / Math.max(b.hoursAgo, 1)) - (a.popularity / Math.max(a.hoursAgo, 1)); });
+
+      var limit = Math.min(filtered.length, catState.page * 6);
+      var visible = filtered.slice(0, limit);
+
+      var grid = document.getElementById('cat-grid');
+      grid.innerHTML = visible.map(function(a) {
+        return '<article class="card"><div class="card-img ' + a.img + '"></div><div class="meta-row"><span class="cat-chip"><span class="emoji">' + cat.emoji + '</span>' + cat.name + '</span><span>' + a.time + '</span></div><h3 class="card-title">' + a.title + '</h3><p class="card-dek">' + a.dek + '</p></article>';
+      }).join('');
+
+      document.getElementById('cat-count').textContent = filtered.length;
+      var periodLabels = { all: 'Tümü', today: 'Bugün', week: 'Bu Hafta', month: 'Bu Ay' };
+      document.getElementById('cat-period-label').textContent = periodLabels[catState.period];
+
+      var btn = document.getElementById('catLoadMore');
+      if (btn) btn.style.display = (limit < filtered.length) ? 'inline-flex' : 'none';
+
+      setTimeout(linkifyCards, 50);
+    }
+
+    function buildYazarPage(slug) {
+      var yazarlar = {
+        'avci-editoru': {
+          name: 'Avcı Editörü', role: 'Girişimcilik Editörü',
+          bio: 'Türkiye ve dünyadan girişimcilik, startup ve iş dünyası haberlerini kaleme alır. Her gün yeni, filler yok. İçerik üretim süreçlerini AI ile destekleyen hybrid yazım yaklaşımı.',
+          articles: 147, readers: '2.4M', avatar: 'A'
+        }
+      };
+      var y = yazarlar[slug] || yazarlar['avci-editoru'];
+      document.getElementById('yazar-name').textContent = y.name;
+      document.getElementById('yazar-role').textContent = y.role;
+      document.getElementById('yazar-bio').textContent = y.bio;
+      document.getElementById('yazar-avatar').textContent = y.avatar;
+      document.getElementById('yazar-article-count').textContent = y.articles;
+      document.getElementById('yazar-reader-count').textContent = y.readers;
+
+      var grid = document.getElementById('yazar-articles');
+      if (grid) {
+        var catKeys = Object.keys(categories);
+        grid.innerHTML = sampleArticles.slice(0, 9).map(function(a, i) {
+          var c = categories[catKeys[i % catKeys.length]];
+          return '<article class="card"><div class="card-img ' + a.img + '"></div><div class="meta-row"><span class="cat-chip"><span class="emoji">' + c.emoji + '</span>' + c.name + '</span><span>' + a.time + '</span></div><h3 class="card-title">' + a.title + '</h3><p class="card-dek">' + a.dek + '</p></article>';
+        }).join('');
+        setTimeout(linkifyCards, 50);
+      }
+    }
+
+    // Expose sampleArticles with categories for related/search
+    window.sampleArticles = sampleArticles.map(function(a, i){
+      var catKeys = Object.keys(categories);
+      var c = categories[catKeys[i % catKeys.length]];
+      return { title: a.title, dek: a.dek, img: a.img, time: a.time, cat: c.name, emoji: c.emoji };
+    });
+
+    // Category UI handlers
+    document.querySelectorAll('.cat-filter').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.cat-filter').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        catState.period = btn.dataset.period;
+        catState.page = 1;
+        var hash = (location.hash || '').replace('#', '');
+        if (categories[hash]) buildCategoryGrid(hash);
+      });
+    });
+    var sortSelect = document.getElementById('catSort');
+    if (sortSelect) sortSelect.addEventListener('change', function(){
+      catState.sort = sortSelect.value;
+      catState.page = 1;
+      var hash = (location.hash || '').replace('#', '');
+      if (categories[hash]) buildCategoryGrid(hash);
+    });
+    var loadMoreBtn = document.getElementById('catLoadMore');
+    if (loadMoreBtn) loadMoreBtn.addEventListener('click', function(){
+      catState.page++;
+      var hash = (location.hash || '').replace('#', '');
+      if (categories[hash]) buildCategoryGrid(hash);
+    });
+
+    function router() {
+      var hash = (location.hash || '#home').replace('#', '');
+      var views = ['home', 'category', 'duyur', 'haber', 'arama', 'static', '404', 'yazar'];
+      var activeView;
+      var activeCat = null;
+
+      if (hash === 'home' || hash === '') {
+        activeView = 'home';
+      } else if (hash === 'bilinir' || hash === 'bilinirligini-artir' || hash === 'bilinir-form' || hash === 'duyur') {
+        activeView = 'duyur';
+        var formEl = document.getElementById('bilinir-form');
+      } else if (hash.indexOf('haber/') === 0 || hash === 'haber') {
+        activeView = 'haber';
+        var slug = hash.replace('haber/', '');
+        buildHaberDetail(slug);
+      } else if (hash === 'arama') {
+        activeView = 'arama';
+        setTimeout(function(){ var i = document.getElementById('aramaInput'); if (i) i.focus(); }, 100);
+      } else if (hash === 'hakkinda' || hash === 'iletisim' || hash === 'kvkk') {
+        activeView = 'static';
+        buildStaticPage(hash);
+      } else if (hash.indexOf('yazar/') === 0 || hash === 'yazar') {
+        activeView = 'yazar';
+        buildYazarPage(hash.replace('yazar/', ''));
+      } else if (categories[hash]) {
+        activeView = 'category';
+        activeCat = hash;
+      } else {
+        activeView = '404';
+      }
+
+      views.forEach(function(v) {
+        var el = document.getElementById('view-' + v);
+        if (el) el.hidden = (v !== activeView);
+      });
+
+      // Reading progress visible only on haber view
+      var rp = document.getElementById('readingProgress');
+      if (rp) rp.classList.toggle('visible', activeView === 'haber');
+
+      if (activeCat) buildCategoryGrid(activeCat);
+
+      document.querySelectorAll('.cats a').forEach(function(a) {
+        var view = a.getAttribute('data-view');
+        a.classList.toggle('active', view === hash || (view === 'home' && (hash === '' || hash === 'home')));
+      });
+
+      window.scrollTo(0, 0);
+    }
+
+    // Build haber detail — reads clicked card data from sessionStorage
+    function buildHaberDetail(slug) {
+      var data = {};
+      try { data = JSON.parse(sessionStorage.getItem('haber_data') || '{}'); } catch(e) {}
+      if (!data.title) {
+        data = {
+          title: 'Haber yükleniyor',
+          dek: 'Bu haber direk linkle açıldı. Ana sayfadan tıkladığın bir kart olmadığı için varsayılan içerik gösteriliyor.',
+          category: 'Startup',
+          emoji: '🚀',
+          catSlug: 'startup'
+        };
+      }
+
+      // Fill header
+      var set = function(id, val) { var el = document.getElementById(id); if (el && val != null) el.textContent = val; };
+      set('haber-title', data.title);
+      set('haber-breadcrumb-title', data.title);
+      set('haber-dek', data.dek || '');
+      set('haber-cat-name', data.category || 'Startup');
+      set('haber-cat-emoji', data.emoji || '🚀');
+      var catLink = document.getElementById('haber-cat-link');
+      if (catLink) {
+        catLink.textContent = data.category || 'Startup';
+        catLink.setAttribute('href', '#' + (data.catSlug || 'startup'));
+      }
+
+      // Reading time estimate
+      var words = (data.title + ' ' + (data.dek || '')).split(/\s+/).length;
+      set('haber-reading', Math.max(3, Math.ceil(words / 60)) + ' dk okuma');
+
+      // Date — if card had a time, use "today"; otherwise generic
+      set('haber-date', '28 Ekim 2026, ' + new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'}));
+
+      // Cover gradient based on imgClass
+      var cover = document.querySelector('.haber-cover');
+      if (cover) {
+        cover.className = 'haber-cover';
+        if (data.imgClass) cover.classList.add(data.imgClass);
+      }
+
+      // Generate body content based on category/title
+      var body = document.getElementById('haber-body-content');
+      if (body) body.innerHTML = generateBody(data);
+
+      // Related — exclude current slug
+      var rel = document.getElementById('related-grid');
+      if (rel) {
+        var all = window.sampleArticles || [];
+        var related = all.filter(function(a){
+          return slugify(a.title) !== slug;
+        }).slice(0, 3);
+        rel.innerHTML = related.map(function(a){
+          return '<a href="#haber/' + slugify(a.title) + '" class="card" data-title="' + a.title + '" data-dek="' + a.dek + '" data-cat="' + a.cat + '" data-emoji="' + a.emoji + '" data-img="' + a.img + '"><div class="card-img ' + a.img + '"></div><div class="meta-row"><span class="cat-chip"><span class="emoji">' + a.emoji + '</span>' + a.cat + '</span><span>' + a.time + '</span></div><h3 class="card-title">' + a.title + '</h3><p class="card-dek">' + a.dek + '</p></a>';
+        }).join('');
+      }
+    }
+
+    // Generic body generator (would be replaced by real article body from backend)
+    function generateBody(data) {
+      var title = data.title || '';
+      var cat = (data.category || 'Startup').toLowerCase();
+      var intro = data.dek || title;
+
+      var templates = {
+        startup: {
+          h1: 'Yatırım tutarı ve zaman çizelgesi',
+          h2: 'Pazar dinamikleri',
+          h3: 'Türk ekosistemi için ne anlama geliyor?'
+        },
+        teknoloji: {
+          h1: 'Teknik detaylar',
+          h2: 'Rekabet avantajı',
+          h3: 'Kullanıcı etkisi'
+        },
+        finans: {
+          h1: 'Piyasa etkisi',
+          h2: 'Yatırımcı değerlendirmesi',
+          h3: 'Önümüzdeki dönem beklentileri'
+        },
+        girişimcilik: {
+          h1: 'Yolculuk ve kritik kararlar',
+          h2: 'Modelin arkasındaki içgörü',
+          h3: 'Diğer kurucular için dersler'
+        },
+        girişimciler: {
+          h1: 'Yolculuk ve kritik kararlar',
+          h2: 'Modelin arkasındaki içgörü',
+          h3: 'Diğer kurucular için dersler'
+        },
+        pazarlama: {
+          h1: 'Kampanya mekaniği',
+          h2: 'Dönüşüm metriği',
+          h3: 'Diğer markalar için uygulanabilirlik'
+        },
+        küresel: {
+          h1: 'Küresel pazar bağlamı',
+          h2: 'Bölgesel etki',
+          h3: 'Türkiye ile bağlantı'
+        }
+      };
+      var t = templates[cat] || templates.startup;
+
+      return '<p><strong>' + intro + '</strong></p>' +
+        '<p>Bu haberin tam metni içerik yönetim sisteminden gelecek. Admin panelinde "Yeni Haber" sayfasından manuel veya AI ile yazılan içerik burada görünecek. Şu anda sadece başlık, kategori ve kapak görseli dinamik olarak dolduruluyor.</p>' +
+        '<h2>' + t.h1 + '</h2>' +
+        '<p>Bu bölüm, haberin ana finansal, teknik veya operasyonel detaylarını içerir. Yazarın araştırması ve kaynak doğrulamasıyla desteklenir.</p>' +
+        '<ul><li>İlk önemli nokta burada açıklanır</li><li>İkinci kritik veri veya anekdot</li><li>Üçüncü destekleyici kanıt</li><li>Dördüncü ilgili bağlam</li></ul>' +
+        '<blockquote>Bu konu için uzmanlardan veya içeriden alınmış öne çıkan bir alıntı. Haberin okunabilirliğini ve otoritesini artırır.</blockquote>' +
+        '<h2>' + t.h2 + '</h2>' +
+        '<p>İkinci ana bölüm, konuyu daha geniş bir çerçevede ele alır. Rakipler, pazar koşulları veya sektörel bağlam burada incelenir.</p>' +
+        '<p>Bu bölümdeki analiz, haberin uzun vadeli önemini ve okuyucu için ne anlama geldiğini açıklar.</p>' +
+        '<h3>' + t.h3 + '</h3>' +
+        '<p>Son bölüm, Türkiye perspektifinden veya Avcı Network kitlesi için pratik çıkarımları içerir. Girişimciler, yatırımcılar ve karar vericiler için eyleme geçirilebilir bilgi.</p>';
+    }
+
+    // Build static page content
+    function buildStaticPage(key) {
+      var pages = {
+        hakkinda: {
+          title: 'Hakkında',
+          body: '<p><strong>Avcı Network</strong>, Türkiye\'nin iş dünyasını, girişimciliği ve teknolojiyi bir araya getiren bağımsız bir medya platformudur.</p><p>30 farklı sosyal medya hesabından oluşan ağımız, aylık 100 milyon kişiye ulaşır. Her gün yeni, filler yok, düz haber yok.</p><h2>Ne yapıyoruz?</h2><p>Türkiye\'den ve dünyadan girişimcilik, startup, teknoloji ve finans haberlerini kaleme alıyoruz. İçerik üreticisi girişimcilerin hikayelerini duyuruyor, markaları doğru kitleyle buluşturuyoruz.</p><h2>Hizmetlerimiz</h2><ul><li><strong>Clipping</strong> — Uzun form içeriğini kısa form motoruna sokarız, dağıtım ağımızdan izletir.</li><li><strong>Founder Marketing</strong> — Girişimcilerin kişisel markasını Türkiye\'nin konuştuğu kitleye tanıtırız.</li><li><strong>Marka İşbirliği</strong> — Markaların Avcı içeriklerine entegrasyonu için üç farklı iş birliği modeli.</li></ul><h2>Ekibimiz</h2><p>Alperen Kurtuldu kurdu, Avcı ortağı. Bursa merkezli, uzaktan çalışan bir ekip. İçerik, yayın, dağıtım, satış süreçleri AI agent sistemleriyle otomatize ediliyor.</p><h2>İletişim</h2><p>Haber, iş birliği veya basın için <a href="mailto:hello@avci.network">hello@avci.network</a> adresine yazabilirsin.</p>'
+        },
+        iletisim: {
+          title: 'İletişim',
+          body: '<p>Her türlü soru, iş birliği veya haber ihbarı için bize ulaşabilirsin. 24 saat içinde geri dönüş yapıyoruz.</p><div class="static-contact-grid"><div class="contact-item"><strong>Genel E-posta</strong><a href="mailto:hello@avci.network">hello@avci.network</a></div><div class="contact-item"><strong>Haber İhbarı</strong><a href="mailto:haber@avci.network">haber@avci.network</a></div><div class="contact-item"><strong>İş Birliği</strong><a href="mailto:isbirligi@avci.network">isbirligi@avci.network</a></div><div class="contact-item"><strong>Basın</strong><a href="mailto:basin@avci.network">basin@avci.network</a></div><div class="contact-item"><strong>Instagram</strong><a href="https://instagram.com/avci" target="_blank">@avci</a></div><div class="contact-item"><strong>Adres</strong>Osmangazi, Bursa<br>Türkiye</div></div><h2>Çalışmak istiyorsan</h2><p>Hizmetlerimizle ilgili somut bir ihtiyacın varsa, <a href="#bilinir">Birlikte Çalışalım</a> sayfasından başvuru formunu doldurabilirsin. Kısa bir keşif görüşmesiyle devam ederiz.</p>'
+        },
+        kvkk: {
+          title: 'KVKK & Gizlilik',
+          body: '<p><em>Son güncelleme: 28 Ekim 2026</em></p><p>Avcı Network olarak kişisel verilerinin güvenliği bizim için önemli. 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamındaki hak ve yükümlülüklerimizi bu sayfada açıklıyoruz.</p><h2>Hangi verileri topluyoruz?</h2><ul><li>Site ziyaretlerinde: tarayıcı tipi, cihaz bilgisi, IP adresi (anonim), ziyaret ettiğin sayfalar.</li><li>Form doldurduğunda: isim, e-posta, şirket, hizmet tercihi, kısa açıklaman.</li><li>Newsletter aboneliğinde: e-posta adresin.</li></ul><h2>Verileri nasıl kullanıyoruz?</h2><ul><li>Sana geri dönüş yapmak ve talebine cevap vermek için.</li><li>Haftalık bülten ve haber e-postaları için (sadece kayıt olduysan).</li><li>Site performansını iyileştirmek için (anonim analytics).</li></ul><p>Verilerini üçüncü taraflarla paylaşmayız, satmayız. Zorunlu yasal durumlar hariç.</p><h2>Çerezler</h2><p>Sitemiz temel çerezler kullanır: tema tercihin (gündüz/gece), oturum bilgileri. Analytics için Plausible kullanıyoruz, çerezsiz ve GDPR uyumlu.</p><h2>Haklarin</h2><p>KVKK kapsamında senin:</p><ul><li>Verilerine erişme,</li><li>Düzeltme talep etme,</li><li>Silme talep etme,</li><li>İtiraz etme hakların</li></ul><p>bulunmaktadır. Bu haklarını kullanmak için <a href="mailto:kvkk@avci.network">kvkk@avci.network</a> adresine yazabilirsin, 30 gün içinde cevap veririz.</p><h2>Değişiklikler</h2><p>Bu politikayı değiştirirsek, sitede yayınlar ve e-posta abonelerine bildiririz. Değişiklikler yayına girer girmez geçerli olur.</p>'
+        }
+      };
+      var p = pages[key] || pages.hakkinda;
+      document.getElementById('static-title').textContent = p.title;
+      document.getElementById('static-body').innerHTML = p.body;
+    }
+
+    // Make news cards go to haber detail
+    function slugify(text) {
+      return (text || 'haber')
+        .toLowerCase()
+        .replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ı/g, 'i')
+        .replace(/ö/g, 'o').replace(/ş/g, 's').replace(/ü/g, 'u')
+        .replace(/'/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .substring(0, 60)
+        .replace(/\s+/g, '-');
+    }
+    function linkifyCards() {
+      document.querySelectorAll('.card:not(.linked), .side-item:not(.linked), .pop-item:not(.linked), .hero-main:not(.linked)').forEach(function(c){
+        c.classList.add('linked');
+        if (c.tagName === 'A' && c.getAttribute('href') === '#') {
+          c.removeAttribute('href');
+          c.style.cursor = 'pointer';
+        }
+        c.addEventListener('click', function(e){
+          var inner = e.target.closest('a');
+          if (inner && inner !== c) return;
+          e.preventDefault();
+
+          // Collect card data
+          var titleEl = c.querySelector('.card-title, .side-title, .pop-title, .hero-title');
+          var dekEl = c.querySelector('.card-dek, .hero-dek');
+          var catChip = c.querySelector('.cat-chip');
+          var sideMeta = c.querySelector('.side-meta');
+          var imgEl = c.querySelector('.card-img, .pop-thumb, .side-thumb, .hero-img');
+
+          var title = titleEl ? titleEl.textContent.trim() : 'Haber';
+          var dek = dekEl ? dekEl.textContent.trim() : '';
+          var category = c.dataset.cat || '';
+          var emoji = c.dataset.emoji || '📰';
+
+          if (catChip && !category) {
+            var em = catChip.querySelector('.emoji');
+            if (em) emoji = em.textContent;
+            category = catChip.textContent.replace(em ? em.textContent : '', '').trim();
+          }
+          if (!category && sideMeta) {
+            category = sideMeta.textContent.split('·')[0].trim();
+          }
+
+          var imgClass = '';
+          if (imgEl) {
+            var classes = imgEl.className.split(/\s+/);
+            classes.forEach(function(cl){
+              if (['a','b','c','d','e','f'].indexOf(cl) !== -1) imgClass = cl;
+            });
+          }
+          if (!imgClass && c.dataset.img) imgClass = c.dataset.img;
+
+          var catSlug = (category || 'startup').toLowerCase()
+            .replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ı/g,'i')
+            .replace(/ö/g,'o').replace(/ü/g,'u').replace(/ç/g,'c')
+            .replace(/[^a-z0-9]/g,'');
+
+          sessionStorage.setItem('haber_data', JSON.stringify({
+            title: title,
+            dek: dek,
+            category: category,
+            emoji: emoji,
+            imgClass: imgClass,
+            catSlug: catSlug
+          }));
+
+          var slug = slugify(title);
+          var href = c.getAttribute('href');
+          if (href && href.indexOf('#haber/') === 0) {
+            location.hash = href.substring(1);
+          } else {
+            location.hash = 'haber/' + slug;
+          }
+        });
+      });
+    }
+
+    window.addEventListener('hashchange', function(){
+      router();
+      setTimeout(linkifyCards, 100);
+    });
+    router();
+    setTimeout(linkifyCards, 100);
+  })();
+
+  // Reading progress bar
+  (function(){
+    var bar = document.getElementById('readingProgressBar');
+    var rp = document.getElementById('readingProgress');
+    if (!bar || !rp) return;
+    function update() {
+      if (!rp.classList.contains('visible')) return;
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop;
+      var height = (doc.scrollHeight - doc.clientHeight);
+      var pct = height > 0 ? Math.min(100, (scrollTop / height) * 100) : 0;
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // Make byline avatar link to yazar page
+  document.addEventListener('click', function(e){
+    var avatar = e.target.closest('.byline-avatar, .author-card .byline-avatar');
+    if (avatar && !avatar.closest('.yazar-hero')) {
+      location.hash = 'yazar/avci-editoru';
+    }
+    var byname = e.target.closest('.byline-name, .author-card h4');
+    if (byname) {
+      location.hash = 'yazar/avci-editoru';
+    }
+  });
+
+  // Share buttons
+  function shareOn(platform) {
+    var url = encodeURIComponent(location.href);
+    var title = encodeURIComponent(document.getElementById('haber-title') ? document.getElementById('haber-title').textContent : document.title);
+    var links = {
+      x: 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title,
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + url,
+      whatsapp: 'https://wa.me/?text=' + title + '%20' + url
+    };
+    if (platform === 'copy') {
+      navigator.clipboard.writeText(location.href).then(function(){
+        alert('Link kopyalandı!');
+      });
+      return;
+    }
+    if (links[platform]) window.open(links[platform], '_blank', 'noopener,width=600,height=500');
+  }
+
+  // Arama
+  (function(){
+    var sampleArticles = [
+      { img: 'a', cat: 'Startup', emoji: '🚀', time: '2 saat önce', title: 'Trendyol Avrupa pazarına genişliyor: Berlin, Amsterdam, Londra', dek: 'Türkiye\'nin en değerli startup\'ı 450M€ yatırım ile üç şehre açılıyor.' },
+      { img: 'b', cat: 'Girişimcilik', emoji: '💼', time: '4 saat önce', title: 'Y Combinator\'a kabul edilen üç Türk girişimcinin ortak paydası', dek: 'Üç kurucunun hikayesi: B2B SaaS ve ABD\'ye direkt giriş.' },
+      { img: 'c', cat: 'Teknoloji', emoji: '🖥️', time: '6 saat önce', title: 'OpenAI\'ın yeni modeli Türkçe\'de GPT-4\'ten %40 daha hızlı', dek: 'Yeni dil işleme modelinde önemli atılım.' },
+      { img: 'd', cat: 'Finans', emoji: '💰', time: '8 saat önce', title: 'Erken aşama yatırımcılar GCC bölgesine odaklanıyor', dek: 'Dubai, Riyad, Abu Dabi\'de yeni fonlar açılıyor.' },
+      { img: 'e', cat: 'Pazarlama', emoji: '📈', time: '10 saat önce', title: 'Influencer pazarlamada mikro-trend: nano-influencer dönemi', dek: '10-50K takipçili content creator\'lar neden bu kadar değerli?' },
+      { img: 'f', cat: 'Küresel', emoji: '🌍', time: '12 saat önce', title: 'Çin pazarına açılmak isteyen Türk markaların yol haritası', dek: 'Alibaba partner programına kabul süreci ve ilk hamleler.' }
+    ];
+    function render(filtered, q) {
+      var el = document.getElementById('aramaResults');
+      var stats = document.getElementById('aramaStats');
+      if (!el) return;
+      if (!q || q.length < 2) {
+        el.innerHTML = '';
+        if (stats) stats.textContent = 'Aramak için yaz veya aşağıdaki popüler konulardan seç';
+        return;
+      }
+      if (!filtered.length) {
+        el.innerHTML = '<div class="arama-empty"><div class="ic">🔍</div><div>"' + q + '" için sonuç bulunamadı</div></div>';
+        if (stats) stats.textContent = '0 sonuç · "' + q + '"';
+        return;
+      }
+      el.innerHTML = filtered.map(function(a){
+        return '<a href="#haber/' + encodeURIComponent(a.title.toLowerCase().substring(0, 40).replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')) + '" class="card"><div class="card-img ' + a.img + '"></div><div class="meta-row"><span class="cat-chip"><span class="emoji">' + a.emoji + '</span>' + a.cat + '</span><span>' + a.time + '</span></div><h3 class="card-title">' + a.title + '</h3><p class="card-dek">' + a.dek + '</p></a>';
+      }).join('');
+      if (stats) stats.textContent = filtered.length + ' sonuç · "' + q + '"';
+    }
+    function search(q) {
+      q = (q || '').toLowerCase().trim();
+      if (q.length < 2) { render([], q); return; }
+      var filtered = sampleArticles.filter(function(a){
+        return a.title.toLowerCase().indexOf(q) !== -1 ||
+               a.dek.toLowerCase().indexOf(q) !== -1 ||
+               a.cat.toLowerCase().indexOf(q) !== -1;
+      });
+      render(filtered, q);
+    }
+    window.doArama = function(q) {
+      var i = document.getElementById('aramaInput');
+      if (i) { i.value = q; search(q); }
+    };
+    var inp = document.getElementById('aramaInput');
+    if (inp) inp.addEventListener('input', function(e){ search(e.target.value); });
+
+    // Header search input → arama view
+    var headerSearch = document.querySelector('.search input');
+    if (headerSearch) {
+      headerSearch.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' && headerSearch.value.trim().length >= 2) {
+          location.hash = 'arama';
+          setTimeout(function(){ window.doArama(headerSearch.value); }, 150);
+        }
+      });
+    }
+  })();
+
+  // Scroll: cats hide on sustained scroll down, show on sustained scroll up
+  // Uses accumulated delta to avoid flicker from trackpad micro-oscillations
+  (function(){
+    var header = document.querySelector('header');
+    if (!header) return;
+    var lastY = window.scrollY;
+    var accDown = 0;
+    var accUp = 0;
+    var HIDE_THRESHOLD = 36;
+    var SHOW_THRESHOLD = 18;
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY;
+        var delta = y - lastY;
+        lastY = y;
+        if (y < 30) {
+          header.classList.remove('compact');
+          accDown = 0;
+          accUp = 0;
+        } else if (delta > 0) {
+          accDown += delta;
+          accUp = 0;
+          if (accDown > HIDE_THRESHOLD) {
+            header.classList.add('compact');
+            accDown = 0;
+          }
+        } else if (delta < 0) {
+          accUp += -delta;
+          accDown = 0;
+          if (accUp > SHOW_THRESHOLD) {
+            header.classList.remove('compact');
+            accUp = 0;
+          }
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+
+</script>
